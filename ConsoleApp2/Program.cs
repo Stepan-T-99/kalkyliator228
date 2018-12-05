@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ConsoleApp2
 {
@@ -19,9 +20,12 @@ namespace ConsoleApp2
             date = date.Next;
             date.date.Print();
             date = date.head;
-            date.date.Print();*/
+            date.date.Print();*/  
+            StreamWriter log = new StreamWriter("log.txt", true);
+            Graphics.Log = log;
             Graphics.Read();
             Console.ReadKey();
+            log.Close();
             return ;
         }
     }
@@ -174,14 +178,15 @@ namespace ConsoleApp2
             return date.Day + "." + date.Month + "." +date.Year;
         }
 
-        public void Print()
+        public string Print()
         {
-            Console.WriteLine($"{Day}.{Month}.{Year}");
+             return Day + "." + Month + "." + Year;
         }
     }
 
     public class Graphics
     {
+        public static StreamWriter Log;
         public static void Read()
         {
             string str;
@@ -198,11 +203,11 @@ namespace ConsoleApp2
                 {
                     case "-":
                         date_3 = date_1 - date_2;
-                        date_3.Print();
+                        Log.WriteLine(st[0] + " " + st[1] + " " + st[2] + " = " + date_3.Print() + "  / " + DateTime.Now.ToShortTimeString());
                         break;
                     case "+":
                         date_3 = date_1 + date_2;
-                        date_3.Print();
+                        Log.WriteLine(st[0] + " " + st[1] + " " + st[2] + " = " + date_3.Print() + "  / " + DateTime.Now.ToShortTimeString());
                         break;
 
                 }
@@ -229,7 +234,7 @@ namespace ConsoleApp2
                     Console.WriteLine("недопустимое действие");
                     return;
             }
-            Console.WriteLine($"{val_1} {s} {val_2} = {result}");
+            Log.WriteLine(val_1 + " " + s + " " + val_2 + " = " + result + "  / " + DateTime.Now.ToShortTimeString());
         }
         protected static void PrintInt(string val_1, string val_2, char s)
         {
